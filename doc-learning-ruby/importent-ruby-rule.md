@@ -19,3 +19,9 @@ user_dto.rb
 ตั้งชื่อ variable ให้ snake_case
 ตัวอย่าง user_dto
 ห้าม userDto
+
+snake_case สำหรับ variable
+
+PascalCase สำหรับ class/module
+
+file name ต้อง match class name
