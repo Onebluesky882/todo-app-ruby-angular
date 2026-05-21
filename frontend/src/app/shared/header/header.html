@@ -1,0 +1,172 @@
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16 md:h-20">
+      <!-- 1. Logo (คอมพิวเตอร์ & มือถือ) -->
+      <div class="shrink-0 flex items-center">
+        <a href="#" class="text-2xl font-bold text-blue-600 tracking-tight"
+          >SHOP<span class="text-gray-900">DEE</span></a
+        >
+      </div>
+
+      <!-- 2. Search Bar (แสดงเฉพาะหน้าจอคอมพิวเตอร์และแท็บเล็ตขนาดใหญ่) -->
+      <div class="hidden md:flex flex-1 max-w-md mx-8">
+        <div class="relative w-full">
+          <input
+            type="text"
+            class="w-full bg-gray-100 border-transparent rounded-lg py-2 px-4 pl-10 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+            placeholder="ค้นหาสินค้าที่ต้องการ..."
+          />
+          <div class="absolute left-3 top-2.5 text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Desktop Navigation Links (แสดงเฉพาะจอใหญ่) -->
+      <div class="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-700">
+        <a href="#" class="hover:text-blue-600 transition-colors">หน้าแรก</a>
+        <a href="#" class="hover:text-blue-600 transition-colors">หมวดหมู่</a>
+        <a href="#" class="hover:text-blue-600 transition-colors">โปรโมชั่น</a>
+      </div>
+
+      <!-- 4. Right Side Icons (User, Wishlist, Cart) -->
+      <div class="flex items-center space-x-2 md:space-x-5">
+        <!-- Search Icon (สำหรับมือถือ) -->
+        <button class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </button>
+
+        <!-- User Profile -->
+        <button
+          class="hidden sm:block p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-all"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            />
+          </svg>
+        </button>
+
+        <!-- Cart Icon -->
+        <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-all">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+          <span
+            *ngIf="isCartCount > 0"
+            class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full"
+          >
+            {{ isCartCount }}
+          </span>
+        </button>
+
+        <!-- Hamburger Menu (มือถือ) -->
+        <button
+          (click)="toggleMenu()"
+          class="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              *ngIf="!isMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+            <path
+              *ngIf="isMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Mobile Menu Overlay (แสดงเมื่อกด Hamburger) -->
+  <div *ngIf="isMenuOpen" class="lg:hidden bg-white border-t border-gray-100 animate-fade-in-down">
+    <div class="px-4 pt-2 pb-6 space-y-1">
+      <a
+        href="#"
+        class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all"
+        >หน้าแรก</a
+      >
+      <a
+        href="#"
+        class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all"
+        >หมวดหมู่ทั้งหมด</a
+      >
+      <a
+        href="#"
+        class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all"
+        >สินค้าลดราคา</a
+      >
+      <a
+        href="#"
+        class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all"
+        >บัญชีของฉัน</a
+      >
+      <hr class="my-2 border-gray-100" />
+      <div class="px-3 py-3">
+        <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold">
+          เข้าสู่ระบบ / สมัครสมาชิก
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
