@@ -1,0 +1,237 @@
+<div
+  class="absolute top-0 left-0 z-50 bg-black/50 w-full h-screen flex items-center justify-center"
+>
+  <div
+    class="relative w-full max-w-md mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100"
+  >
+    <div class="absolute top-4 right-4">
+      <button (click)="setClose()" class="text-gray-400 hover:text-gray-600">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-black text-dark tracking-tight mb-4">
+        @if (toggleSignUp) {
+          สมัครสมาชิก
+        } @else {
+          ลงชื่อเข้าใช้งาน
+        }
+      </h2>
+      <p class="text-secondary text-sm">เข้าสู่ระบบเพื่อเริ่มช้อปสินค้าไอทีราคาพิเศษ</p>
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="toggleSignUp ? onSubmitRegister() : onSubmitLogin()"
+      class="space-y-5"
+    >
+      <!-- Email Field -->
+      <div>
+        <label class="block text-sm font-bold text-gray-700 mb-1">อีเมล</label>
+        <div class="relative">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="example@email.com"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            [ngClass]="{
+              'border-danger': loginForm.get('email')?.touched && loginForm.get('email')?.errors,
+            }"
+          />
+          <div class="absolute right-3 top-3 text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) {
+          <p class="text-xs text-danger mt-1">กรุณากรอกอีเมล</p>
+        }
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')) {
+          <p class="text-xs text-danger mt-1">รูปแบบอีเมลไม่ถูกต้อง</p>
+        }
+      </div>
+      <!-- Password Field -->
+      <div>
+        <label class="block text-sm font-bold text-gray-700 mb-1">รหัสผ่าน</label>
+
+        <div class="relative">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="กรอกรหัสผ่าน"
+            class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            [ngClass]="{
+              'border-danger':
+                loginForm.get('password')?.touched && loginForm.get('password')?.invalid,
+            }"
+          />
+
+          <!-- Toggle Button -->
+          <button
+            type="button"
+            (click)="togglePassword()"
+            class="absolute right-3 top-3 text-gray-400 hover:text-primary transition-colors"
+          >
+            @if (!showPassword) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
+              </svg>
+            }
+
+            @if (showPassword) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"
+                />
+              </svg>
+            }
+          </button>
+        </div>
+
+        <!-- Error -->
+        @if (
+          loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')
+        ) {
+          <p class="text-xs text-danger mt-1">กรุณากรอกรหัสผ่าน</p>
+        }
+
+        @if (
+          loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')
+        ) {
+          <p class="text-xs text-danger mt-1">รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร</p>
+        }
+      </div>
+      <!-- Toggle Show Password -->
+
+      @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
+        <p class="text-xs text-danger mt-1">กรุณากรอกรหัสผ่าน</p>
+      }
+
+      @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')) {
+        <p class="text-xs text-danger mt-1">รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร</p>
+      }
+
+      <!-- Utils -->
+      <div class="flex items-center justify-between text-xs font-semibold">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+          />
+          <span class="text-gray-600">จำฉันไว้</span>
+        </label>
+        <a href="#" class="text-primary hover:underline italic">ลืมรหัสผ่าน?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-100 active:scale-95"
+      >
+        เข้าสู่ระบบ
+      </button>
+
+      <!-- Divider -->
+      <div class="relative flex py-2 items-center">
+        <div class="*:grow border-t border-gray-100"></div>
+        <span class="shrink mx-4 text-gray-400 text-[10px] font-bold uppercase tracking-widest"
+          >หรือ</span
+        >
+        <div class="grow border-t border-gray-100"></div>
+      </div>
+
+      <!-- Social Login (Optional) -->
+      <button
+        type="button"
+        class="w-full bg-gray-50 text-gray-700 py-3 rounded-xl font-bold border border-gray-200 hover:bg-gray-100 transition-all flex items-center justify-center gap-2"
+      >
+        <img
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          class="h-5 w-5"
+          alt="Google"
+        />
+        เข้าด้วย Google
+      </button>
+    </form>
+
+    <p (click)="toggleSignUpState(!toggleSignUp)" class="text-center mt-8 text-sm text-gray-600">
+      ยังไม่มีบัญชี?
+      <span
+        class="text-info font-bold hover:underline cursor-pointer {{
+          loading ? 'opacity-50 pointer-events-none' : ''
+        }}"
+      >
+        @if (!toggleSignUp) {
+          @if (toggleMessageConfirmEmail) {
+            <span class="text-green-500">ตรวจสอบอีเมลของคุณ เพื่อยืนยันการสมัครสมาชิก</span>
+          } @else {
+            <span class="text-gray-600">สมัครสมาชิกฟรี</span>
+            @if (loading) {
+              <span class="loading loading-spinner loading-sm"></span>
+            }
+          }
+        } @else {
+          <span class="text-gray-600">เข้าสู่ระบบ</span>
+          @if (loading) {
+            <span class="loading loading-spinner loading-sm"></span>
+          }
+        }
+      </span>
+    </p>
+  </div>
+</div>

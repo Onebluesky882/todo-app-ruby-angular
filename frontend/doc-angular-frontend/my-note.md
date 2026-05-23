@@ -13,6 +13,7 @@ step
 ## ทำ core
 
 ng g service core/services/api
+ng g service core/lib/supabase
 
 ## ทำ shared component
 
