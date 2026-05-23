@@ -1,6 +1,6 @@
 <div>
   <div
-    class="items-center bg-yellow-50 border rounded-2xl shadow-md border-yellow-100 px-4 py-2 m-2 p-4 flex flex-col md:flex-row gap-4"
+    class="max-w-xl mx-auto items-center bg-[#fffff3] border rounded-2xl shadow-md border-yellow-100 px-4 py-2 m-2 p-4 flex flex-col md:flex-row gap-4"
   >
     <!-- image -->
     <div
@@ -24,12 +24,25 @@
           </div>
 
           <!-- remove -->
-          <button
+          <svg
             (click)="removeCartItem()"
-            class="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg transition-all"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-trash2-icon lucide-trash-2 cursor-pointer text-red-400"
           >
-            ลบ
-          </button>
+            <path d="M10 11v6" />
+            <path d="M14 11v6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+            <path d="M3 6h18" />
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
         </div>
 
         <p class="text-sm text-gray-500 mt-2 line-clamp-2">
@@ -92,15 +105,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Payment Button -->
-
-  <button
-    class="absolute bottom-4 right-4 text-primary hover:text-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-  >
-    <i data-lucide="credit-card" class="w-4 h-4"> dfdf</i>
-  </button>
-  <!-- Payment popup -->
-
-  <!-- Payment success popup -->
 </div>
