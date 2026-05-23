@@ -63,12 +63,37 @@
       >
     </div>
     <!-- items -->
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
-        @for (product of products; track product.id) {
-          <app-item-card [item]="product" [formatPrice]="formatPrice" />
-        }
+
+    @if (loading()) {
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
+          @for (i of [1, 2, 3, 4, 5]; track i) {
+            <div class="animate-pulse">
+              <div class="bg-gray-200 rounded-lg h-48"></div>
+              <div class="mt-4 space-y-2">
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+                <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    } @else {
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
+          @for (product of products(); track product.id) {
+            <app-item-card
+              [addedItemId]="addedItemId()"
+              [session]="session"
+              [handleAddToCart]="handleAddToCart"
+              [addToCart]="addToCart"
+              [item]="product"
+              [formatPrice]="formatPrice"
+            />
+          }
+        </div>
+      </div>
+    }
   </main>
 </div>
