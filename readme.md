@@ -1,77 +1,82 @@
-# Fullstack Ruby + Angular Application
+# 📦 Fullstack Ruby + Angular E-commerce
 
-This is a fullstack web application built with:
+A fullstack e-commerce application built with Angular, Ruby on Rails, and a signal-based cart system.
 
-- Backend: Ruby on Rails (API)
+---
 
-- Frontend: Angular (Standalone)
+## 🚀 Features
 
-- Database: PostgreSQL
+### 🛍️ Products
+- Product listing & detail pages
+- Rating system
+- Category / subcategory filtering
 
-- Deployment: Railway
+### 🛒 Cart
+- Add, update quantity, and remove items
+- Auto price calculation (signal-based)
 
-The project is structured as a modular fullstack system with separated backend and frontend applications.
+### 👤 Authentication
+- Login / Logout
+- Session stored in `localStorage`
+- Protected routes with redirect to login
+
+### 💳 Checkout
+- Payment popup UI
+- Payment method selection
+- Total price summary
+
+### 📦 Orders
+- Order history
+- Order status: `paid` / `pending` / `cancelled`
+
+---
+
+## 🧠 Tech Stack
+
+### Frontend (Angular)
+| Tool | Usage |
+|------|-------|
+| Angular 17+ | Standalone Components |
+| Signals | `signal`, `computed`, `effect` |
+| RxJS | `firstValueFrom` |
+| TailwindCSS | Styling |
+| Angular Router | Navigation & route guards |
+
+### Backend (Ruby)
+| Tool | Usage |
+|------|-------|
+| Ruby on Rails | API server |
+| REST API | JSON responses |
 
 ---
 
 ## 📁 Project Structure
 
+```
+frontend/
+└── src/app/
+    ├── core/        # Services: api, session, cart-store
+    ├── features/    # Pages: home, cart, order, login
+    ├── shared/      # Reusable components
+    ├── layouts/     # Header / footer layout
+    └── type/        # TypeScript types
+```
+
 ---
 
-## 🚀 Tech Stack
-
-### Backend
-
-- Ruby on Rails 8+
-- PostgreSQL
-- RESTful API architecture
-- Service layer pattern (app/services)
-- DTO pattern (app/dtos)
-- Background jobs (app/jobs)
+## 🛠️ Getting Started
 
 ### Frontend
+```bash
+cd frontend
+npm install
+ng serve
+```
 
-- Angular (Standalone Components)
-- Angular Router
-- Signals for state management
-- TailwindCSS
-- SSR enabled (Angular Universal structure)
-
----
-
-## ⚙️ Backend Setup
-
-### Install dependencies
-
+### Backend
 ```bash
 cd backend
 bundle install
+rails db:setup
+rails server
 ```
-
-📌 Key Features
-
-- Fullstack CRUD system
-- Modular architecture
-- Global state handling (Angular signals)
-- Layout system (header / footer / router outlet)
-- REST API integration
-- Production-ready deployment structure
-
-## 🌍 Deployment
-
-### Backend (Railway)
-
-- Rails API deployed on Railway
-- PostgreSQL database hosted on Railway
-- Environment variables managed via Railway dashboard
-
----
-
-### Frontend (Cloudflare Workers)
-
-- Angular application deployed using Cloudflare Workers
-- Built as static assets (SSR optional depending on config)
-- Served globally via Cloudflare edge network
-- Fast CDN performance and low latency worldwide
-
-website : [https://demo-angular.onebluesky882.workers.dev](https://demo-angular.onebluesky882.workers.dev)
