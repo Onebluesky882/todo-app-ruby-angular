@@ -67,4 +67,7 @@ export class HeaderComponent {
   navigateToCart() {
     this.router.navigate(['/cart']);
   }
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
 }

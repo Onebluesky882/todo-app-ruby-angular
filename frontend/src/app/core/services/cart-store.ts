@@ -12,12 +12,15 @@ export class CartStore {
   totalItems = computed(() => this.items().reduce((sum, item) => sum + item.qty, 0));
 
   totalPrice = computed(() => {
-    return this.items().reduce((sum, cartItem) => {
-      const itemTotal = cartItem.items.reduce((innerSum, product) => {
-        return innerSum + product.priceCents;
-      }, 0);
-      return sum + itemTotal * cartItem.qty;
-    }, 0);
+    return (
+      this.items().reduce((sum, cartItem) => {
+        const itemTotal = cartItem.items.reduce((innerSum, product) => {
+          return innerSum + product.priceCents;
+        }, 0);
+
+        return sum + itemTotal * cartItem.qty;
+      }, 0) / 100
+    );
   });
 
   addToCart(product: CartItem) {
@@ -41,7 +44,13 @@ export class CartStore {
   }
 
   removeItem(id: number) {
-    this.items.set(this.items().filter((i) => i.items.some((p) => String(p.id) === String(id))));
+    const filtered = this.items().filter((cartItem) => {
+      return !cartItem.items.some((product) => {
+        return String(product.id) === String(id);
+      });
+    });
+
+    this.items.set(filtered);
   }
 
   clearCart() {

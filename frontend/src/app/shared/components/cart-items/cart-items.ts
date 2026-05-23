@@ -1,50 +1,64 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { createIcons, icons } from 'lucide'; // หรือใช้ icon ที่มีอยู่แล้ว
-
-// Interface สำหรับข้อมูลสินค้าในตะกร้า
-interface CartItemData {
-  id: string;
-  image: string;
-  name: string;
-  quantity: number;
-  priceCents: number;
-  subCategory: string;
-  // ... เพิ่ม property อื่นๆ ที่จำเป็น
-}
+import { CartItem } from 'src/type/cart-item.type';
 
 @Component({
   selector: 'app-cart-item',
   standalone: true,
-  imports: [CommonModule], // Import Trash2 icon หรือ icon อื่นๆ
+  imports: [CommonModule],
   templateUrl: './cart-items.html',
 })
 export class CartItemComponent {
-  @Input({ required: true }) item!: CartItemData; // รับข้อมูลสินค้าเข้ามา
+  @Input({ required: true }) item!: CartItem;
 
-  @Output() quantityChange = new EventEmitter<{ id: string; quantity: number }>();
-  @Output() removeItem = new EventEmitter<string>(); // ส่ง ID สินค้าออกไปเพื่อลบ
+  @Output() quantityChange = new EventEmitter<number>();
 
-  get totalPrice(): number {
-    return this.item.priceCents * this.item.quantity;
+  @Output() removeItem = new EventEmitter<string>();
+
+  // get first product
+  get product() {
+    return this.item?.items?.[0];
   }
 
-  // ฟังก์ชันเพิ่ม/ลด จำนวนสินค้า
+  // total product price
+  get total(): number {
+    if (!this.item) return 0;
+
+    return this.item.items.reduce((sum, product) => {
+      console.log(' product.priceCents :', product.priceCents);
+      return sum + product.priceCents;
+    }, 0);
+  }
+
+  // total price with qty
+  get totalPrice(): number {
+    if (!this.item) return 0;
+    return this.total * this.item.qty;
+  }
+
+  // update quantity
   updateQuantity(newQuantity: number) {
     if (newQuantity > 0) {
-      this.quantityChange.emit({ id: this.item.id, quantity: newQuantity });
+      this.quantityChange.emit(newQuantity);
     } else {
-      this.removeCartItem(); // ถ้าจำนวนเป็น 0 ให้ลบออก
+      this.removeCartItem();
     }
   }
 
-  // ฟังก์ชันลบสินค้า
+  // remove item
   removeCartItem() {
-    this.removeItem.emit(this.item.id);
+    const firstItem = this.item?.items?.[0];
+
+    if (!firstItem) return;
+
+    this.removeItem.emit(firstItem.id);
   }
 
-  // ฟังก์ชันแปลงราคา (ใช้ซ้ำกับหน้า Home)
+  // format currency
   formatPrice(cents: number): string {
-    return (cents / 100).toLocaleString('th-TH', { minimumFractionDigits: 2 });
+    return (cents / 100).toLocaleString('th-TH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 }

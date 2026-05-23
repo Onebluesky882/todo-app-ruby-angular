@@ -1,70 +1,106 @@
-<div
-  class="bg-card border border-border rounded-3xl p-5 flex items-center shadow-sm mb-4 relative group"
->
-  <!-- Product Image -->
+<div>
   <div
-    class="w-20 h-20 rounded-xl bg-secondary/50 flex items-center justify-center mr-4 border border-border"
+    class="items-center bg-yellow-50 border rounded-2xl shadow-md border-yellow-100 px-4 py-2 m-2 p-4 flex flex-col md:flex-row gap-4"
   >
-    <img [src]="item.image" [alt]="item.name" class="w-14 h-14 rounded-lg object-cover" />
-  </div>
+    <!-- image -->
+    <div
+      class="w-full bg-white justify-center border-rose-50 md:w-32 h-32 border shadow rounded-xl overflow-hidden shrink-0"
+    >
+      <img [src]="product.image" [alt]="product.name" class="w-full h-full object-contain" />
+    </div>
 
-  <!-- Product Details -->
-  <div class="flex-1">
-    <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">
-      {{ item.subCategory }}
-    </p>
-    <h3 class="text-base font-black text-foreground italic leading-tight mb-2 line-clamp-2">
-      {{ item.name }}
-    </h3>
+    <!-- content -->
+    <div class="flex-1 flex flex-col justify-between">
+      <div>
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs text-primary font-semibold uppercase">
+              {{ product.subCategory }}
+            </p>
 
-    <!-- Price & Quantity -->
-    <div class="flex items-center justify-between">
-      <div class="flex items-baseline gap-1">
-        <span class="text-xs font-bold text-primary">฿</span>
-        <span class="text-lg font-black text-primary italic">{{
-          formatPrice(item.priceCents)
-        }}</span>
+            <h2 class="font-bold text-gray-800 text-lg mt-1">
+              {{ product.name }}
+            </h2>
+          </div>
+
+          <!-- remove -->
+          <button
+            (click)="removeCartItem()"
+            class="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg transition-all"
+          >
+            ลบ
+          </button>
+        </div>
+
+        <p class="text-sm text-gray-500 mt-2 line-clamp-2">
+          {{ product.description }}
+        </p>
       </div>
 
-      <!-- Quantity Selector -->
-      <div class="flex items-center border border-border rounded-lg px-3 py-1.5">
-        <button
-          (click)="updateQuantity(item.quantity - 1)"
-          class="text-muted-foreground hover:text-primary font-bold text-lg mr-3 disabled:opacity-50 disabled:cursor-not-allowed"
-          [disabled]="item.quantity <= 1"
-        >
-          &minus;
-        </button>
-        <span class="text-base font-black mx-2">{{ item.quantity }}</span>
-        <button
-          (click)="updateQuantity(item.quantity + 1)"
-          class="text-primary font-bold text-lg ml-3"
-        >
-          &plus;
-        </button>
+      <!-- footer -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4">
+        <!-- qty -->
+        <div class="flex items-center gap-3">
+          <svg
+            (click)="updateQuantity(item.qty - 1)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-circle-minus-icon lucide-circle-minus text-gray-500 hover:text-blue-700"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 12h8" />
+          </svg>
+
+          <span class="font-bold text-lg">
+            {{ item.qty }}
+          </span>
+
+          <svg
+            (click)="updateQuantity(item.qty + 1)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-circle-plus-icon lucide-circle-plus text-gray-500 hover:text-blue-700"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 12h8" />
+            <path d="M12 8v8" />
+          </svg>
+        </div>
+
+        <!-- price -->
+        <div class="text-right">
+          <p class="text-xs text-gray-500">ราคารวม</p>
+
+          <p class="text-xl text-gray-800">
+            {{ formatPrice(totalPrice) }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Remove Button (Invisible until hover) -->
-  <button
-    (click)="removeCartItem()"
-    class="absolute top-4 right-4 text-destructive hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-  >
-    <i data-lucide="trash-2" class="w-4 h-4"></i>
-  </button>
 
   <!-- Payment Button -->
 
   <button
     class="absolute bottom-4 right-4 text-primary hover:text-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
   >
-    <i data-lucide="credit-card" class="w-4 h-4"></i>
+    <i data-lucide="credit-card" class="w-4 h-4"> dfdf</i>
   </button>
   <!-- Payment popup -->
 
   <!-- Payment success popup -->
-  <a href="/profile">
-    <p>ตรวจสอบสถานะการสั่งซื้อ</p>
-  </a>
 </div>
