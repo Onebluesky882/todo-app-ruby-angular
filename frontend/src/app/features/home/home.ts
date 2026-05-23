@@ -17,7 +17,6 @@ export class Home implements OnInit {
   products = [] as Product[];
   ngOnInit(): void {
     this.api.getProducts().subscribe((data) => {
-      console.log(data);
       this.products = data;
     });
   }
