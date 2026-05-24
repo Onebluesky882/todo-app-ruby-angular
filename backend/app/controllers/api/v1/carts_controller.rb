@@ -60,4 +60,18 @@ end
   render json: cart
 
 end
+
+
+ def orders
+  
+  user_id = request.headers["user-id"]
+
+  return render json: { error: "missing user_id" }, status: 400 if user_id.blank?
+  
+ orders = CartService.get_orders(user_id)
+ 
+ render json: orders
+
+end
+
 end

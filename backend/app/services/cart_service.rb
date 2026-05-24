@@ -1,10 +1,8 @@
 class CartService
 
   def self.get_cart(user_id)
-    Cart.find_or_create_by(
-      user_id: user_id,
-      status: 'onCart'
-    )
+    return nil if user_id.blank?
+     Cart.find_by(user_id: user_id)
   end
 
   def self.create_cart(user_id)
@@ -127,4 +125,11 @@ class CartService
   cart
 
 end
+def self.get_orders(user_id)
+
+   
+ Cart.where(user_id: user_id, status: "paid").order(created_at: :desc)
+
+end
+
 end

@@ -9,19 +9,22 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   namespace :api do
-    namespace :v1 do
-      resources :products
 
-       get "cart/:user_id", to: "carts#show"
+  namespace :v1 do
+
+    resources :products
+
+    get "cart/orders", to: "carts#orders"
+
+    get "cart/:user_id", to: "carts#show"
 
     post "cart/add_item", to: "carts#add_item"
-    
+
     post "cart/checkout", to: "carts#checkout"
-    
-   delete 'cart/remove_item',
 
-  to: 'carts#remove_from_cart'
+    delete "cart/remove_item", to: "carts#remove_from_cart"
 
-    end
   end
+
+end
 end
