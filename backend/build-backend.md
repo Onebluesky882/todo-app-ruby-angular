@@ -127,7 +127,17 @@ generate RBS signatures for cart model
 mkdir sig
 bundle exec rbs prototype rb app/models/cart.rb > sig/cart.rbs
 ```
+วิธีให้ type safety ทำงานจริง
+```bash
+bundle exec steep init
+bundle exec rbs prototype rb app/services/cart_service.rb > sig/cart_service.rbs
+```
+check
+```bash
+bundle exec steep check
+```
 
 ## สร้าง service cart
+```
 ```
 ````

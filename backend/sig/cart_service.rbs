@@ -1,0 +1,12 @@
+class CartService
+  def self.get_cart: (untyped user_id) -> untyped
+
+  def self.create_cart: (untyped user_id) -> untyped
+
+  def self.update_cart: (untyped cart_id, untyped params) -> untyped
+
+  def self.delete_cart: (untyped cart_id) -> untyped
+
+  # Add product to cart
+  def self.add_to_cart: (untyped user_id, untyped product_id, untyped qty) -> untyped
+end
